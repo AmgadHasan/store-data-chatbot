@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 def query_books_database(
-    sql_query: str, db_url: str = "books_data.db"
+    sql_query: str, db_url: str = "data/books_data.db"
 ) -> list[dict]:
     """
     Execute a read-only SQL query on the books database and return the results.
