@@ -6,6 +6,10 @@ from typing import Dict, List, Union
 import requests
 from bs4 import BeautifulSoup
 
+from src.utils import create_logger
+
+logger = create_logger(logger_name="scraper", log_file="api.log", log_level="info")
+
 
 def get_total_pages_and_products(base_url: str) -> tuple[int, int]:
     """
@@ -142,21 +146,21 @@ def scrape_all_books(
     """
     total_pages, total_products = get_total_pages_and_products(base_url)
 
-    print(f"Total Products: {total_products}")
-    print(f"Total Pages: {total_pages}")
+    logger.info(f"Total Products: {total_products}")
+    logger.info(f"Total Pages: {total_pages}")
 
     all_books = []
 
     for page_num in range(1, total_pages + 1):
         url = page_url_template.format(page_num)
-        print(f"Scraping page {page_num}")
+        logger.info(f"Scraping page {page_num}")
 
         try:
             page_books = scrape_book_page(url)
             all_books.extend(page_books)
             time.sleep(0.1)  # Polite scraping: add a delay between requests
         except Exception as e:
-            print(f"Error scraping page {page_num}: {e}")
+            logger.error(f"Error scraping page {page_num}: {e}")
 
     return all_books
 
@@ -207,11 +211,11 @@ def save_to_sqlite(data: List[Dict[str, Union[str, float, int]]], db_path: str) 
 
     conn.commit()
     conn.close()
-    print(f"Data saved to {db_path}")
+    logger.info(f"Data saved to {db_path}")
 
 
 def main() -> None:
-    print("Scraping data")
+    logger.info("Scraping data")
     base_url = "https://books.toscrape.com/index.html"
     page_url_template = "https://books.toscrape.com/catalogue/page-{0}.html"
 
@@ -219,9 +223,8 @@ def main() -> None:
 
     save_to_sqlite(books_data, "data/books_data.db")
 
-    print(f"Scraped {len(books_data)} books. Data saved to books.db")
+    logger.info(f"Scraped {len(books_data)} books. Data saved to books.db")
 
 
 if __name__ == "__main__":
-    print("Scraping data...")
     main()

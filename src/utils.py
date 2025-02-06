@@ -1,10 +1,8 @@
 import json
 import logging
-import os
 import sqlite3
 import time
 from contextlib import closing
-from pathlib import Path
 
 
 def query_books_database(
@@ -54,7 +52,6 @@ def handle_function_calls(
         function_name = tool_call.function.name
         if function_name in function_map:
             function_args = json.loads(tool_call.function.arguments)
-            print(f"Function arguments: {function_args}")
 
             function_to_call = function_map[function_name]
             try:
@@ -72,7 +69,6 @@ def handle_function_calls(
             )
             return thread
         else:
-            print(f"Function {function_name} not found.")
             raise KeyError(f"Function {function_name} not found in function map.")
 
 

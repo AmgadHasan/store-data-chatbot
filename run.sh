@@ -1,4 +1,5 @@
 # Build the docker image
+echo "Building the docker image"
 docker build . -t bookstore-chatbot:latest
 # Scrape and prepare the data from the website
 FILE_PATH=$(pwd)/data/books_data.db
@@ -9,4 +10,5 @@ else
     docker run --user root -v $(pwd)/data:/app/data bookstore-chatbot:latest uv run python src/scrape.py
 fi
 # Run the gradio chatbot
+echo "Starting gradio app from container"
 docker run -v $(pwd)/data:/app/data -p 7860:7860 --env-file .env bookstore-chatbot:latest
