@@ -14,7 +14,7 @@ from src.utils import create_logger, handle_function_calls, log_execution_time
 TEMPERATURE = 0
 MAX_COMPLETION_TOKENS = 2048
 
-logger = create_logger(logger_name="llm", log_file="api.log", log_level="info")
+logger = create_logger(logger_name="llm")
 
 model = os.environ.get("CHAT_MODEL")
 if not model:

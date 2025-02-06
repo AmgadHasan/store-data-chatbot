@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 
 from src.utils import create_logger
 
-logger = create_logger(logger_name="scraper", log_file="api.log", log_level="info")
+logger = create_logger(logger_name="scraper")
 
 
 def get_total_pages_and_products(base_url: str) -> tuple[int, int]:

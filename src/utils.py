@@ -72,7 +72,7 @@ def handle_function_calls(
             raise KeyError(f"Function {function_name} not found in function map.")
 
 
-def create_logger(logger_name: str, log_file: str, log_level: str) -> logging.Logger:
+def create_logger(logger_name: str, log_file: str = "data/api.log", log_level: str = "info") -> logging.Logger:
     """
     Create and configure a logger with specified name, log file, and log level.
 
