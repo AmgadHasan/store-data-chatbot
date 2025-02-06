@@ -94,7 +94,7 @@ docker build . -t bookstore-chatbot:latest
 3. Scrape the data
 The following code runs the container to scrape the data. We mount the local `data` folder to save the output data in a persistent manner:
 ```sh
-docker run --user root -v $(pwd)/data:/app/data bookstore-chatbot:latest uv run python src/scrape.py
+docker run --user root -v $(pwd)/data:/app/data bookstore-chatbot:latest uv run python -m src.scrape
 ```
 
 4. Start the gradio app
