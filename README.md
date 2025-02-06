@@ -101,6 +101,41 @@ docker run --user root -v $(pwd)/data:/app/data bookstore-chatbot:latest uv run 
 ```sh
 docker run -v $(pwd)/data:/app/data -p 7860:7860 --env-file .env bookstore-chatbot:latest
 ```
+## Data scraping
+### Documentation for Web Scraping Script
+
+The data scraping code is contained in `src/scape.py`. This script is designed to scrape a website to gather detailed information about books. The data collected includes the book's title, price, star rating, availability, description, category, and stock quantity. The scraped data is then saved to an SQLite database.
+
+#### Steps
+
+1. **Determine Total Pages and Products**
+   - The script starts by visiting the home page of the website.
+   - It parses the HTML content to find the total number of products and the total number of pages available for pagination.
+   - This information is extracted using regular expressions from specific text elements on the page.
+
+2. **Scrape Book Details**
+   - For each book listed on a page, the script extracts basic information such as the title, price, and star rating.
+   - It then constructs the URL for the detailed page of each book and navigates to it.
+   - On the detailed page, the script gathers more comprehensive data, including the book's description, category, and stock quantity.
+
+3. **Scrape All Books on All Pages**
+   - Using the total number of pages determined earlier, the script iterates through each page.
+   - For each page, it calls the function to scrape book details for all books listed on that page.
+   - It accumulates all the gathered book data into a list of dictionaries.
+
+4. **Save Data to SQLite Database**
+   - Once all book data is collected, the script creates an SQLite database and defines a table structure to store the book information.
+   - It then inserts all the collected data into the database.
+
+5. **Logging**
+   - Throughout the process, the script logs important information, such as the total number of products and pages, the progress of scraping each page, and any errors encountered.
+   - This helps in monitoring the script's execution and troubleshooting any issues.
+
+### Areas for improvement
+- Concurrency: Use multithreading or asynchronous requests to handle multiple requests simultaneously, e.g. scraping multiple pages concurrently
+- Error Handling: Implement a retry mechanism and graceful exit for interruptions.
+- Data Validation: Validate and clean data before storing it.
+- Rate Limiting: Implement adaptive throttling to respect server capacity.
 
 ## Example answers
 ### Q: Are there any books in the 'Travel' category that are marked as 'Out of stock'?
