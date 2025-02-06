@@ -1,7 +1,11 @@
 import gradio as gr
 
 from src.llm import process_user_question
+from src.utils import create_logger
 
+logger = create_logger(logger_name="app", log_file="api.log", log_level="info")
+
+logger.info("Creating gradio interface")
 app = gr.Interface(
     fn=process_user_question,
     inputs="text",
@@ -11,4 +15,5 @@ app = gr.Interface(
 )
 
 # Launch the app
+logger.info("Starting gradio app!")
 app.launch()

@@ -211,6 +211,7 @@ def save_to_sqlite(data: List[Dict[str, Union[str, float, int]]], db_path: str) 
 
 
 def main() -> None:
+    print("Scraping data")
     base_url = "https://books.toscrape.com/index.html"
     page_url_template = "https://books.toscrape.com/catalogue/page-{0}.html"
 
@@ -222,4 +223,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    print("Scraping data...")
     main()

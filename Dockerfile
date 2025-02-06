@@ -19,7 +19,7 @@ COPY --from=base /app/.venv /app/.venv
 
 COPY . /app
 
-RUN uv sync --frozen
+RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen
 
 ENV GRADIO_SERVER_NAME="0.0.0.0"
 
